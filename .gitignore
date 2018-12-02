@@ -4,4 +4,6 @@ target/
 out/
 build/
 .gradle/
+*.lock
+*.bin
 
