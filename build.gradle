@@ -8,9 +8,26 @@ version '1.0'
 sourceCompatibility = 1.8
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 
+ext {
+    restAssured = "3.2.0"
+    junit = "5.3.2"
+    selenide = "5.0.1"
+}
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile "com.codeborne:selenide:$selenide"
+    compile "io.rest-assured:json-path:$restAssured"
+    compile "io.rest-assured:rest-assured:$restAssured"
+    compile "io.rest-assured:json-schema-validator:$restAssured"
+    compile "org.junit.jupiter:junit-jupiter-api:$junit"
+    compile "org.junit.jupiter:junit-jupiter-params:$junit"
+    runtime "org.junit.jupiter:junit-jupiter-engine:$junit"
+}
+
+test {
+    useJUnitPlatform()
 }
