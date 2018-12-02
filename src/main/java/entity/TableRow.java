@@ -2,9 +2,9 @@ package entity;
 
 public class TableRow {
 
-    String name;
-    String status;
-    String notes;
+    private String name;
+    private String status;
+    private String notes;
 
     public TableRow(String name, String status, String notes){
         this.name = name;
