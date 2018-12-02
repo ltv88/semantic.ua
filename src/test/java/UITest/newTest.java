@@ -1,6 +1,5 @@
 package UITest;
 
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
@@ -8,11 +7,15 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import entity.TableRow;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import pages.TablePage;
+
 
 public class newTest {
 
@@ -70,5 +73,26 @@ public class newTest {
         errMessages.get(0).shouldHave(text("Please select at least two skills"));
         errMessages.get(1).shouldHave(text("Please enter a username"));
         errMessages.get(2).shouldHave(text("Your username must be at least 5 characters"));
+    }
+
+    @Test
+    public void apiTest(){
+        RestAssured.given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("https://jsonplaceholder.typicode.com/users")
+                .then()
+                .statusCode(200)
+                .body("id", Matchers.hasItem(9))
+                .extract().response().prettyPrint();
+
+
+        RestAssured.given()
+                .contentType(ContentType.JSON)
+                .get("https://jsonplaceholder.typicode.com/users?id=9")
+                .then()
+                .statusCode(200)
+                .body("company.name", Matchers.contains(("Yost and Sons")))
+                .extract().response().prettyPrint();
     }
 }
