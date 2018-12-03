@@ -8,7 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class TablePage {
+public class TablePage extends BasePage {
+
+    public TablePage() {
+        this.pageUrl = "https://semantic-ui.com/collections/table";
+    }
 
     private static List<TableRow> tableRows;
 
