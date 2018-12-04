@@ -11,6 +11,7 @@ public class BaseTest {
     public static void setUp(){
         Configuration.browser = "chrome";
         Configuration.startMaximized = true;
+        Configuration.baseUrl = "https://semantic-ui.com";
     }
 
     @AfterAll

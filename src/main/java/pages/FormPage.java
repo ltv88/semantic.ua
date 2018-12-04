@@ -9,56 +9,73 @@ import static com.codeborne.selenide.Selenide.$$;
 public class FormPage extends BasePage {
 
     public FormPage(){
-        this.pageUrl = "https://semantic-ui.com/behaviors/form";
+        this.pageUrl = "/behaviors/form";
+        this.sideBar = new SideBar();
     }
 
-    public SelenideElement form() {
-        return $("div.auto.example > form");
+    private SideBar sideBar;
+
+    SelenideElement form = $("div.auto.example > form");
+    SelenideElement nameInput = $("div.auto.example > form input[name=\"name\"]");
+    SelenideElement genderDropDown = $(" div.auto.example > form [name=\"gender\"]~i");
+    ElementsCollection genderList = $$("div.auto.example > form .menu.visible .item");
+    SelenideElement skillsDropDown = $("div.auto.example > form [name=\"skills\"]~i");
+    ElementsCollection skillsList = $$("div.auto.example > form [name='skills'] ~ .menu .item");
+    SelenideElement checkBox = $("div.auto.example > form [type='checkbox']");
+    SelenideElement submitButton = $("div.auto.example > form .submit");
+
+
+    public FormPage form() {
+        form.scrollIntoView(true);
+        return new FormPage();
     }
 
-    public SelenideElement nameField() {
-        return $("div.auto.example > form input[name=\"name\"]");
+    public FormPage setName(String name) {
+        nameInput.sendKeys(name);
+        return new FormPage();
     }
 
-    public SelenideElement genderDropDown() {
-        return $(" div.auto.example > form [name=\"gender\"]~i");
+    public FormPage openGenderDropDown() {
+        genderDropDown.click();
+        return new FormPage();
     }
 
-    public SelenideElement getGender(String gender){
-        ElementsCollection menu = $$("div.auto.example > form .menu.visible .item").shouldBe(CollectionCondition.size(2));
-        SelenideElement getGender = null;
-        for(SelenideElement elem : menu){
+    public FormPage setGender(String gender){
+        genderList.shouldBe(CollectionCondition.size(2));
+        for(SelenideElement elem : genderList){
             System.out.println(":> "+elem.getText().toLowerCase());
             if(elem.getText().toLowerCase().equals(gender)){
-                getGender = elem;
+                elem.click();
                 break;
             }
         }
-        return getGender;
+        return new FormPage();
     }
 
-    public SelenideElement skillsDropDown(){
-        return $("div.auto.example > form [name=\"skills\"]~i");
+    public FormPage clickSkillsDropDown(){
+        skillsDropDown.click();
+        return new FormPage() ;
     }
 
-    public SelenideElement getSkills(String name){
-        ElementsCollection skills = $$("div.auto.example > form [name='skills'] ~ .menu .item").shouldBe(CollectionCondition.sizeGreaterThan(0));
-        SelenideElement skill = null;
-        for(SelenideElement element : skills){
+    public FormPage getSkills(String name){
+        skillsList.shouldBe(CollectionCondition.sizeGreaterThan(0));
+        for(SelenideElement element : skillsList){
             if(element.getText().toLowerCase().equals(name)){
-                skill = element;
+                element.click();
                 break;
             }
         }
-        return skill;
+        return new FormPage();
     }
 
-    public SelenideElement checkBox(){
-        return $("div.auto.example > form [type='checkbox']");
+    public FormPage confirmCheckBox(){
+        checkBox.parent().click();
+        return new FormPage();
     }
 
-    public SelenideElement submitButton(){
-        return $("div.auto.example > form .submit");
+    public FormPage submit(){
+        submitButton.click();
+        return new FormPage();
     }
 
     public ElementsCollection errorMessages(){

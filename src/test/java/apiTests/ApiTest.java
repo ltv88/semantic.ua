@@ -1,30 +1,23 @@
 package apiTests;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
+import api.ApiHelper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 public class ApiTest {
 
+    private ApiHelper apiHelper = new ApiHelper();
+
     @Test
     public void apiTest(){
-        RestAssured.given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get("https://jsonplaceholder.typicode.com/users")
-                .then()
-                .statusCode(200)
-                .body("id", Matchers.hasItem(9))
-                .extract().response().prettyPrint();
+        //given
+        apiHelper.goToBaseUrl("/users")
 
-
-        RestAssured.given()
-                .contentType(ContentType.JSON)
-                .get("https://jsonplaceholder.typicode.com/users?id=9")
-                .then()
+            //expect
                 .statusCode(200)
-                .body("company.name", Matchers.contains(("Yost and Sons")))
+                .assertThat().body("id", Matchers.hasItem(9))
+                .assertThat().body("company[8].name", Matchers.equalTo("Yost and Sons"))
                 .extract().response().prettyPrint();
     }
+
 }

@@ -9,7 +9,7 @@ public class BasePage {
 
     public void open(){
         Selenide.open(pageUrl);
-        assert  WebDriverRunner.url().equals(pageUrl);
+        assert  WebDriverRunner.url().contains(pageUrl);
     }
 
 }
