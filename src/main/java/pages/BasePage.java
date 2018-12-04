@@ -9,6 +9,7 @@ public class BasePage {
 
     public void open(){
         Selenide.open(pageUrl);
+//        WebDriverRunner.url()
     }
 
     public boolean isPageOpen(){
