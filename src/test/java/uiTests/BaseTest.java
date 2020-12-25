@@ -11,7 +11,7 @@ public class BaseTest {
     @BeforeAll
     public static void setUp(){
 
-        WebDriverManager.chromedriver().version("87");
+        WebDriverManager.chromedriver().browserVersion("87");
         Configuration.browser = "chrome";
         Configuration.startMaximized = true;
         Configuration.baseUrl = "https://semantic-ui.com";
